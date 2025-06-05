@@ -104,3 +104,46 @@ Authorization: Bearer <seu_token>
 - Apenas usuários autenticados podem criar, atualizar ou excluir notícias e usuários.
 - As rotas `news/my` e `auth/me` utilizam o token para identificar o autor/autenticado.
 - O campo `status` das notícias deve conter um dos valores: `draft`, `published`, `archived`.
+
+---
+
+## SQL
+
+```bash
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `summary` text,
+  `content` longtext NOT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `status` enum('draft','published','archived') DEFAULT 'draft',
+  `author_id` int(11) NOT NULL,
+  `views` int(11) DEFAULT 0,
+  `featured_image` varchar(500) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `author_id` (`author_id`),
+  KEY `status` (`status`),
+  KEY `category` (`category`),
+  KEY `created_at` (`created_at`),
+  FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
