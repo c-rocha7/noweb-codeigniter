@@ -52,3 +52,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// Rotas de autenticação
+$route['api/auth/login']['POST'] = 'api/auth/login';
+$route['api/auth/register']['POST'] = 'api/auth/register';
+$route['api/auth/logout']['POST'] = 'api/auth/logout';
+$route['api/auth/me']['GET'] = 'api/auth/me';
+
+// Rotas de usuários (protegidas)
+$route['api/users']['GET'] = 'api/users/index';
+$route['api/users/(:num)']['GET'] = 'api/users/show/$1';
+$route['api/users']['POST'] = 'api/users/create';
+$route['api/users/(:num)']['PUT'] = 'api/users/update/$1';
+$route['api/users/(:num)']['DELETE'] = 'api/users/delete/$1';
+
+// Rotas de notícias
+$route['api/news']['GET'] = 'api/news/index';
+$route['api/news/categories']['GET'] = 'api/news/categories';
+$route['api/news/my']['GET'] = 'api/news/my_news';
+$route['api/news/(:num)']['GET'] = 'api/news/show/$1';
+$route['api/news']['POST'] = 'api/news/create';
+$route['api/news/(:num)']['PUT'] = 'api/news/update/$1';
+$route['api/news/(:num)']['DELETE'] = 'api/news/delete/$1';
